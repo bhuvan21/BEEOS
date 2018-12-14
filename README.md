@@ -1,7 +1,7 @@
 # BEEOS
 This is the "operating system" that will run on BEE v2. It's not really an operating system, more a nice gui.
 
-Currently Implemented:
+Currently Implemented:\n
 Lock Screen
 PIN Unlock
 Existance of Home Screen
