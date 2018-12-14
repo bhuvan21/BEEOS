@@ -1,0 +1,88 @@
+
+
+<PINLockScreen>:
+    background_color: 0, 0, 0, 0
+    GridLayout:
+        cols: 3
+        rows: 3
+        padding: 48
+        spacing: 27
+        pos: 0, -175
+
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/1UP.png"
+            background_down: "images/PIN Buttons/1DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/2UP.png"
+            background_down: "images/PIN Buttons/2DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/3UP.png"
+            background_down: "images/PIN Buttons/3DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/4UP.png"
+            background_down: "images/PIN Buttons/4DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/5UP.png"
+            background_down: "images/PIN Buttons/5DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/6UP.png"
+            background_down: "images/PIN Buttons/6DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/7UP.png"
+            background_down: "images/PIN Buttons/7DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/8UP.png"
+            background_down: "images/PIN Buttons/8DOWN.png"
+            size_hint: None, None
+        Button:
+            size: 110, 110
+            background_normal: "images/PIN Buttons/9UP.png"
+            background_down: "images/PIN Buttons/9DOWN.png"
+            size_hint: None, None
+    Button:
+        pos: 185, 55
+        size: 110, 110
+        background_normal: "images/PIN Buttons/0UP.png"
+        background_down: "images/PIN Buttons/0DOWN.png"
+        size_hint: None, None
+
+
+<RestingLockScreen>:
+    background_color: 0, 0, 0, 0
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: ""
+            size_hint: None, .1
+        Label:
+            text: "22:36"
+            text_size: root.width, None
+            font_size: "90sp"
+            size: self.texture_size
+            size_hint: None, .1
+            halign: "center"
+        Label:
+            text: "Thursday, 13th December"
+            text_size: root.width, None
+            font_size: "30sp"
+            size: self.texture_size
+            size_hint: None, .05
+            halign: "center"
+        Label:
+            text: ""
+            size_hint: None, .75
