@@ -20,4 +20,4 @@ class HelperBEE:
         pass
     
     def get_path():
-        return os.getcwd() + "/apps/"
+        return os.getcwd() 

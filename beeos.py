@@ -1,5 +1,6 @@
 import os
-os.environ['KIVY_IMAGE'] = 'sdl2'
+os.environ['KIVY_IMAGE'] = 'sdl2,pil'
+
 import kivy
 kivy.require('1.10.1')
 
@@ -13,8 +14,6 @@ from kivy.animation import Animation
 from kivy.uix.carousel import Carousel
 from kivy.graphics import Line, Ellipse
 from kivy.uix.screenmanager import Screen, ScreenManager, RiseInTransition
-
-
 
 import datetime
 import importlib.util
@@ -132,7 +131,8 @@ class HomeScreen(Screen):
             self.apps.append(app)
             screen = Screen(name=name)
             screen.add_widget(app["sm"])
-
+            screen.background_color = [0, 0, 0, 0]
+            screen.on_enter = app["sm"].on_enter
             parent.add_widget(screen)
         
         self.realparent = parent
@@ -145,14 +145,12 @@ class HomeScreen(Screen):
                 x = 42.5
                 y -= 145
 
-            
-
             button = Button(background_color=[0, 0, 0, 0],
                         size_hint=[None, None],
-                        pos=[42.5, 600],
+                        pos=[x, y],
                         text=app["name"],
                         color=[0, 0, 0, 0])
-            img = Image(source=app["icon"], pos=(42.5-240+50, 600-400+50))
+            img = Image(source=app["icon"], pos=(x-240+50, y-400+50))
             app["button"] = [button, img]
             button.bind(on_press=self.openapp)
             self.add_widget(button)
@@ -162,9 +160,6 @@ class HomeScreen(Screen):
         self.realparent.current = instance.text
 
 
-
-        
-        
 
 controller = ScreenManager()
 
