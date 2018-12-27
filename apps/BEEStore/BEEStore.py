@@ -6,8 +6,8 @@ from kivy.lang import Builder
 from kivy.config import Config
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from kivy.uix.image import AsyncImage
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.image import Image, AsyncImage
 
 from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 
@@ -17,6 +17,7 @@ import xml.etree.ElementTree as ET
 import threading
 import requests
 import queue
+import subprocess
 
 APP_NAME = "BEEStore"
 
@@ -113,7 +114,8 @@ class DetailAppScreen(Screen):
         root = self.children[0]
         details = root.children[2]
         desc = root.children[1]
-        button = root.children[0]
+        self.button_container = root.children[0]
+        self.button = self.button_container.children[0]
         icon = details.children[1]
         name = details.children[0].children[2]
         author = details.children[0].children[1]
@@ -122,6 +124,28 @@ class DetailAppScreen(Screen):
         author.text = self.app.findall("author")[0].text
         date.text = self.app.findall("releasedate")[0].text
         icon.source = self.app.findall("iconurl")[0].text
+        desc.text = self.app.findall("description")[0].text
+
+        self.button.on_press = self.install
+    
+    def install(self):
+        self.button_container.clear_widgets()
+        activity = Image(source=helperbee.HelperBEE.get_path() + "/images/UI/loading.gif")
+        activity.anim_delay = 1/24
+        self.button_container.add_widget(activity)
+        thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helperbee.HelperBEE.get_path(), self.app.findall("cloneurl")[0].text), shell=True))
+        thread.setDaemon(True)
+        thread.start()
+        
+        while True:
+            if not thread.isAlive():
+                break
+        
+        print("Done")
+        #TODO RESET INSTALL BUTTON ETC
+
+        
+
 
 class BEEStoreScreenManager(ScreenManager):
     def on_enter(self):
