@@ -15,9 +15,12 @@ from kivy.uix.carousel import Carousel
 from kivy.graphics import Line, Ellipse
 from kivy.uix.screenmanager import Screen, ScreenManager, RiseInTransition
 
+import queue
 import datetime
+import threading
 import importlib.util
 from copy import deepcopy
+
 
 from device_info import get_password
 
@@ -116,23 +119,28 @@ class HomeScreen(Screen):
         self.names = [app for app in os.listdir(os.getcwd()+"/apps/") if app[0] != "."]
         self.paths = [os.getcwd() + "/apps/" + app for app in self.names]
         self.apps = []
-        
-            
             
     def ready(self, parent):
-        for name, path in zip(self.names, self.paths):
+        for i in range(len(self.names)-1, -1, -1):
+            name = self.name[i]
+            path = self.paths[i]
+
             app = {"name": name, "path": path}
-            spec = importlib.util.spec_from_file_location(name, path + "/" + name + ".py")
+            spec = importlib.util.spec_from_file_location(name, path + "/main.py")
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             app["module"] = module
             app["sm"] = module.get_app()
             app["icon"] = path + "/" + module.get_icon()
             self.apps.append(app)
+            
             screen = Screen(name=name)
             screen.add_widget(app["sm"])
             screen.background_color = [0, 0, 0, 0]
-            screen.on_enter = app["sm"].on_enter
+            try:
+                screen.on_enter = app["sm"].on_enter
+            except AttributeError:
+                pass
             parent.add_widget(screen)
         
         self.realparent = parent
@@ -155,9 +163,13 @@ class HomeScreen(Screen):
             button.bind(on_press=self.openapp)
             self.add_widget(button)
             self.add_widget(img)
+
+            x += 147.5
             
     def openapp(self, instance):
+        
         self.realparent.current = instance.text
+        
 
 
 
@@ -172,6 +184,22 @@ lock_screen.children[0].children[0].children[0].switch_to_home = home_screen
 controller.add_widget(lock_screen)
 controller.add_widget(HomeScreen(name="Home"))
 controller.get_screen("Home").ready(controller)
+
+'''
+input_queue = queue.Queue()
+input_thread = threading.Thread(None, get_presses)
+input_thread.setDaemon(True)
+input_thread.start()
+
+def get_presses():
+    #TODO add to queue if button's pressed
+
+
+def input_manager():
+    #TODO check input_queue and make relevant actions
+
+Clock.schedule_interval(input_manager, 0.1)
+'''
 
 class BEEOSApp(App):
     def build(self):
