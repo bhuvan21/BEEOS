@@ -19,8 +19,11 @@ class HelperBEE:
     def get_temperature():
         pass
     
-    def get_path():
-        return os.getcwd() 
+    def get_app_path():
+        return os.getcwd() + "/apps/"
+    
+    def get_bee_path():
+        return os.getcwd()
     
     def get_installed_apps():
         return [app for app in os.listdir(HelperBEE.get_path()+"/apps/") if app[0] != "."]

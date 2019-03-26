@@ -22,7 +22,7 @@ import subprocess
 APP_NAME = "BEEStore"
 
 
-Builder.load_file(helperbee.HelperBEE.get_path() + "/apps/" + APP_NAME + "/BEEStore.kv")
+Builder.load_file(helperbee.HelperBEE.get_app_path() + APP_NAME + "/BEEStore.kv")
 Config.set('graphics', 'width', '480')
 Config.set('graphics', 'height', '800')
 
@@ -138,7 +138,7 @@ class DetailAppScreen(Screen):
     
     def install(self):
         self.button_container.clear_widgets()
-        activity = Image(source=helperbee.HelperBEE.get_path() + "/images/UI/loading.gif")
+        activity = Image(source=helperbee.HelperBEE.get_bee_path() + "/images/UI/loading.gif")
         activity.anim_delay = 1/24
         self.button_container.add_widget(activity)
         self.thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helperbee.HelperBEE.get_path(), self.app.findall("cloneurl")[0].text), shell=True))
@@ -190,7 +190,7 @@ class BEEStoreScreenManager(ScreenManager):
 
 controller = BEEStoreScreenManager()
 main = MainScreen(name="Main")
-main.children[0].children[1].source = helperbee.HelperBEE.get_path() + "/images/UI/loading.gif"
+main.children[0].children[1].source = helperbee.HelperBEE.get_bee_path() + "/images/UI/loading.gif"
 controller.add_widget(main)
 controller.add_widget(AllAppsScreen(name="AllApps"))
 controller.add_widget(DetailAppScreen(name="DetailApp"))
