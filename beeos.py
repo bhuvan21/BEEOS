@@ -122,10 +122,11 @@ class HomeScreen(Screen):
             
     def ready(self, parent):
         for i in range(len(self.names)-1, -1, -1):
-            name = self.name[i]
+            name = self.names[i]
             path = self.paths[i]
 
             app = {"name": name, "path": path}
+            
             spec = importlib.util.spec_from_file_location(name, path + "/main.py")
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
@@ -136,12 +137,13 @@ class HomeScreen(Screen):
             
             screen = Screen(name=name)
             screen.add_widget(app["sm"])
-            screen.background_color = [0, 0, 0, 0]
+            screen.background_color = [0, 0, 0, 1]
             try:
                 screen.on_enter = app["sm"].on_enter
             except AttributeError:
                 pass
             parent.add_widget(screen)
+        print(self.apps)
         
         self.realparent = parent
 
@@ -167,7 +169,7 @@ class HomeScreen(Screen):
             x += 147.5
             
     def openapp(self, instance):
-        
+        print(instance.text)
         self.realparent.current = instance.text
         
 

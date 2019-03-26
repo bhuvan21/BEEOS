@@ -184,12 +184,12 @@ class DetailAppScreen(Screen):
 
 class BEEStoreScreenManager(ScreenManager):
     def on_enter(self):
-        self.get_screen("Main").entered()
+        self.get_screen("Splash").entered()
 
 
 
 controller = BEEStoreScreenManager()
-main = MainScreen(name="Main")
+main = MainScreen(name="Splash")
 main.children[0].children[1].source = helperbee.HelperBEE.get_bee_path() + "/images/UI/loading.gif"
 controller.add_widget(main)
 controller.add_widget(AllAppsScreen(name="AllApps"))
@@ -200,5 +200,3 @@ def get_app():
 
 def get_icon():
     return "icon.png"
-
-#MAKE THIS APP ACTUALLY WORK
