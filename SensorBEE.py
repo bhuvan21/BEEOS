@@ -4,7 +4,7 @@ import serial
 class SensorBEE():
     def __init__(self, dev_node="ttyACM0"):
         self.dev_node = "/dev/" + dev_node
-        self.ser = serial.Serial(self.dev_node, 0.01)
+        self.ser = serial.Serial(self.dev_node, timeout=0.01)
     
     def get_raw(self):
         total = ""
