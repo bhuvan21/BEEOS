@@ -23,40 +23,40 @@ class SensorBEE():
         return [x for x in self.get_raw().split(":") if x != ""]
     
     def get_option_button(self):
-        return self.get_split_values()[0]
+        return int(self.get_split_values()[0])
     
     def get_home_button(self):
-        return self.get_split_values()[2]
+        return int(self.get_split_values()[2])
     
     def get_back_button(self):
-        return self.get_split_values()[1]
+        return int(self.get_split_values()[1])
     
     def get_volume_slider(self):
-        return self.get_split_values()[3]
+        return int(self.get_split_values()[3])
 
     def get_temperature(self):
-        return self.get_split_values()[4]
+        return float(self.get_split_values()[4])
     
     def get_raw_accel_x(self):
-        return self.get_split_values()[5]
+        return int(self.get_split_values()[5])
 
     def get_raw_accel_y(self):
-        return self.get_split_values()[6]
+        return int(self.get_split_values()[6])
 
     def get_raw_accel_z(self):
-        return self.get_split_values()[7]
+        return int(self.get_split_values()[7])
 
     def get_accel_x(self):
-        return self.get_split_values()[8]
+        return float(self.get_split_values()[8])
 
     def get_accel_y(self):
-        return self.get_split_values()[9]
+        return float(self.get_split_values()[9])
 
     def get_accel_z(self):
-        return self.get_split_values()[10]
+        return float(self.get_split_values()[10])
 
     def get_proximity(self):
-        return self.get_split_values()[11]
+        return int(self.get_split_values()[11])
     
 class SmartSensorBee():
     def __init__(self, dev_node="ttyACM0"):
