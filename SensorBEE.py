@@ -12,8 +12,9 @@ class SensorBEE():
         self.ser.write(b"1")
         while True:
             read = self.ser.read()
+            print(read)
             if read != b"":
-                total += read
+                total += str(read)
             else:
                 break
         
