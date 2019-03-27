@@ -5,15 +5,22 @@ Currently Implemented:
 Lock Screen  
 PIN Unlock  
 Existance of Home Screen  
-  
-TODO:  
 App system  
 App store  
-Settings app  
-New Unlock Modes  
-Change Wallpapers  
-(Themes?)  
+
+TODO:  
+Settings app - Bluetooth + Wifi, Change Wallpapers
+Volume, Screen Dimming?, Truetone? etc 
+File Transfer System
+Music app
 Reading app  
-Music app  
-Fitness app  
-Manga app  
+Project Gutenberg Ebook Getter
+Weather/Temperature App
+Calculator
+Email
+Tic Tac Toe
+Clock, Timer, Stopwatch
+File Browser?
+Broswer?
+Dice Rolling?
+Reddit?
