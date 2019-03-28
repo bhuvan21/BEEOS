@@ -1,4 +1,5 @@
 import subprocess
+import urllib
 import time
 
 """Credit to Atto Atlas for help"""
@@ -6,24 +7,56 @@ import time
 class WifiBEE():
 
     def get_all_ssids(block=True):
-        ssid_list = []
+        ssids = []
 
-        command = ["sudo", "iw", "wlan0", "scan"]
+        cmd = ["sudo", "iw", "wlan0", "scan"]
 
         while block:
             try:
-                raw_network_data = subprocess.check_output(command)
+                network_data = subprocess.check_output(cmd)
                 break
             except subprocess.CalledProcessError:
                 time.sleep(0.5)
 
-        print(raw_network_data)
-        ssid_split = raw_network_data.split(b"SSID: ")
+        ssid_split = network_data.split(b"SSID: ")
         del ssid_split[0]
 
         for ssid_string in ssid_split:
             ssid = ssid_string.split(b"\n")[0]
 
-            ssid_list.append(ssid.decode())
+            ssids.append(ssid.decode())
 
-        return ssid_list
+        return ssids
+
+    def get_current_ssid(block=True):
+        command = ['iwgetid', '-r']
+        
+        while block:
+            try:
+                connection_data = subprocess.check_output(command)
+                break
+            except subprocess.CalledProcessError:
+                time.sleep(0.5)
+
+        return from_hex_unicode_rep(connection_data)[:-1]
+
+    def from_hex_unicode_rep(ssid):
+        ssid = ssid.decode('unicode-escape')
+        ssid = ssid.encode('latin-1').decode('utf8')
+        return urllib.parse.unquote(ssid)
+
+    def mobile_connect(ssid, password):
+        cmd = ["wpa_cli", "-i", "wlan0", "reconfigure"]
+        str_to_write = '\n#mobile_connect\nnetwork={\n\tssid="%s"\n\tpsk="%s"\n\tpriority=2\n}' % (ssid, password)
+
+        print(str_to_write)
+
+        with open("/etc/wpa_supplicant/wpa_supplicant.conf", 'a') as fil:
+            fil.write(str_to_write)
+
+        time.sleep(2)
+
+        update_wlan_config = subprocess.Popen(cmd)
+        update_wlan_config.communicate()
+
+        return
