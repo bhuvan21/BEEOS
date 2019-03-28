@@ -5,7 +5,10 @@ import queue
 class SensorBEE():
     def __init__(self, dev_node="ttyACM0"):
         self.dev_node = "/dev/" + dev_node
-        self.ser = serial.Serial(self.dev_node)
+        try:
+            self.ser = serial.Serial(self.dev_node)
+        except serial.serialutil.SerialException:
+            print("Not running on Pi?")
     
     def get_raw(self):
         total = ""

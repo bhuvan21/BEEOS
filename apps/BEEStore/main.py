@@ -11,7 +11,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.image import Image, AsyncImage
 from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 
-import helperbee
+from helperbee import helper
 
 import xml.etree.ElementTree as ET
 import threading
@@ -22,7 +22,7 @@ import subprocess
 APP_NAME = "BEEStore"
 
 
-Builder.load_file(helperbee.HelperBEE.get_app_path() + APP_NAME + "/BEEStore.kv")
+Builder.load_file(helper.get_app_path() + APP_NAME + "/BEEStore.kv")
 Config.set('graphics', 'width', '480')
 Config.set('graphics', 'height', '800')
 
@@ -131,17 +131,17 @@ class DetailAppScreen(Screen):
         icon.source = self.app.findall("iconurl")[0].text
         desc.text = self.app.findall("description")[0].text
 
-        if name.text not in helperbee.HelperBEE.get_installed_apps():
+        if name.text not in helper.get_installed_apps():
             self.restore_default()
         else:
             self.app_is_installed()
     
     def install(self):
         self.button_container.clear_widgets()
-        activity = Image(source=helperbee.HelperBEE.get_bee_path() + "/images/UI/loading.gif")
+        activity = Image(source=helper.get_bee_path() + "/images/UI/loading.gif")
         activity.anim_delay = 1/24
         self.button_container.add_widget(activity)
-        self.thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helperbee.HelperBEE.get_path(), self.app.findall("cloneurl")[0].text), shell=True))
+        self.thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helper.get_path(), self.app.findall("cloneurl")[0].text), shell=True))
         self.thread.setDaemon(True)
     
         self.thread.start()
@@ -172,7 +172,7 @@ class DetailAppScreen(Screen):
         self.button_container.children[0].on_press = self.remove_app
     
     def remove_app(self):
-        subprocess.run("sudo rm -rf {}/apps/{}".format(helperbee.HelperBEE.get_path(), self.app.findall("reponame")[0].text), shell=True)
+        subprocess.run("sudo rm -rf {}/apps/{}".format(helper.get_path(), self.app.findall("reponame")[0].text), shell=True)
         self.restore_default()
 
     def back(self):
@@ -190,7 +190,7 @@ class BEEStoreScreenManager(ScreenManager):
 
 controller = BEEStoreScreenManager()
 main = MainScreen(name="Splash")
-main.children[0].children[1].source = helperbee.HelperBEE.get_bee_path() + "/images/UI/loading.gif"
+main.children[0].children[1].source = helper.get_bee_path() + "/images/UI/loading.gif"
 controller.add_widget(main)
 controller.add_widget(AllAppsScreen(name="AllApps"))
 controller.add_widget(DetailAppScreen(name="DetailApp"))
