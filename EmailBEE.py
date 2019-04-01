@@ -35,7 +35,17 @@ class EmailBEE():
                     finalMessage = ''.join(textList)
                     emailTexts.append(finalMessage)
                     return(finalMessage, emailMessage)
-        return ("", "")
+        return (None, None)
+    
+    def get_attachment_filename(self, msg):
+        att_path = "No attachment found."
+        for part in msg.walk():
+            if part.get_content_maintype() == 'multipart':
+                continue
+            if part.get('Content-Disposition') is None:
+                continue
+
+            return part.get_filename()
 
     def save_attachment(self, msg, download_folder=None):
         if download_folder == None:

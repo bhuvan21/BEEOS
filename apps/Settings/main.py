@@ -22,6 +22,8 @@ Config.set('graphics', 'width', '480')
 Config.set('graphics', 'height', '800')
 
 SUBSETTINGS_CATEGORIES = ["Wifi", "Security", "Wallpaper", "Update Resources"]
+BOOK_EXTENSIONS = ["epub"]
+MUSIC_EXTENSIONS = ["mp3"]
 
 
 class SplashScreen(Screen):
@@ -119,7 +121,15 @@ class UpdateResourcesScreen(Screen):
     def refresh(self):
         mail = helper.email.checkMail()
         if mail[1] != None:
-            fp = helper.save_attachment(mail[1])
+            filename = helper.email.get_attachment_filename(mail[1])
+            extension = filename.split(".")[-1]
+            if extension in BOOK_EXTENSIONS:
+                directory = "/books/"
+            elif extension in MUSIC_EXTENSIONS:
+                directory = "/music/"
+            else:
+                directory = "/other/"
+            fp = helper.email.save_attachment(mail[1], download_folder="/" + "/".join(os.getcwd().split("/")[1:-1]) + directory)
             
 
 class SettingsScreenManager(ScreenManager):
