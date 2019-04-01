@@ -1,4 +1,1 @@
-{
-    "password_type":"PIN",
-    "password": "123456"
-}
+{"password_type": "PIN", "password": "123432", "lock_image": "/Users/bhuvan/Documents/GitHub/BEE2/BEEOS/images/Wallpapers/defaultLockWallpaper.png", "home_image": "images/Wallpapers/defaultHomeWallpaper.png"}

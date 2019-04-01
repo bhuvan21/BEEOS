@@ -22,7 +22,7 @@ import importlib.util
 from copy import deepcopy
 
 
-from device_info import get_password
+import device_info
 
 
 Builder.load_file("beeos.kv")
@@ -79,7 +79,7 @@ class PINLockScreen(Screen):
                 self.dots[len(self.password)-1] = Ellipse(pos=position, size=(20, 20))
         
         if len(self.password) == 6:
-            if self.password == get_password():
+            if self.password == device_info.get_password():
                 self.switch_to_home()
             else:
                 self.draw_empty_dots()
@@ -109,18 +109,24 @@ class LockCarousel(Carousel):
 class LockScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.add_widget(Image(source="images/Wallpapers/defaultLockWallpaper.png"))
+        self.bg = Image(source=device_info.get_lock_image())
+        self.add_widget(self.bg)
         self.add_widget(LockCarousel())
+    
+    def ready(self):
+        self.bg.source = device_info.get_lock_image()
         
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.add_widget(Image(source="images/Wallpapers/defaultHomeWallpaper.png"))
+        self.bg = Image(source=device_info.get_home_image())
+        self.add_widget(self.bg)
         self.names = [app for app in os.listdir(os.getcwd()+"/apps/") if app[0] != "."]
         self.paths = [os.getcwd() + "/apps/" + app for app in self.names]
         self.apps = []
             
     def ready(self, parent):
+        self.bg.source = device_info.get_home_image()
         for i in range(len(self.names)-1, -1, -1):
             name = self.names[i]
             path = self.paths[i]

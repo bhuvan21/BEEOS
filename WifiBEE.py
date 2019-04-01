@@ -1,5 +1,5 @@
 import subprocess
-import urllib
+import urllib.parse
 import time
 
 """Credit to Atto Atlas for help"""
@@ -11,6 +11,7 @@ class WifiBEE():
 
         cmd = ["sudo", "iw", "wlan0", "scan"]
 
+        return ["SSID1", "SSID2", "SSID3"]
         while block:
             try:
                 network_data = subprocess.check_output(cmd)
@@ -27,20 +28,24 @@ class WifiBEE():
             ssids.append(ssid.decode())
 
         return ssids
+        
 
     def get_current_ssid(block=True):
         command = ['iwgetid', '-r']
-        
-        while block:
-            try:
-                connection_data = subprocess.check_output(command)
-                break
-            except subprocess.CalledProcessError:
-                time.sleep(0.5)
+        try:
+            
+            while block:
+                try:
+                    connection_data = subprocess.check_output(command)
+                    break
+                except subprocess.CalledProcessError:
+                    time.sleep(0.5)
 
-        return from_hex_unicode_rep(connection_data)[:-1]
+            return self.from_hex_unicode_rep(connection_data)[:-1]
+        except:
+            return "DummySSID"
 
-    def from_hex_unicode_rep(ssid):
+    def from_hex_unicode_rep(ssid, self):
         ssid = ssid.decode('unicode-escape')
         ssid = ssid.encode('latin-1').decode('utf8')
         return urllib.parse.unquote(ssid)

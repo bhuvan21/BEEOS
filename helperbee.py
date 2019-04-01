@@ -1,9 +1,13 @@
 import os
 from SensorBEE import SensorBEE
+from WifiBEE import WifiBEE
+from EmailBEE import EmailBEE
 
 class HelperBEE:
     def __init__(self):
         self.sensors = SensorBEE()
+        self.wifi = WifiBEE()
+        self.email = EmailBEE()
 
     def get_app_path(self):
         return os.getcwd() + "/apps/"

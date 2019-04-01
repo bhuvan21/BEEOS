@@ -25,3 +25,163 @@
             size: self.size
     BoxLayout:
         orientation: "vertical"
+        Label:
+            text: " Wi-Fi"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: None, .2
+
+        Label:
+            text: "Connected to:"
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .1
+            padding_x: 20
+            halign: "left"
+        ScrollView:
+            size_hint: 1, .7
+            BoxLayout:
+                orientation: "vertical"
+
+
+<SecurityScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Security"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: .4, .2
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, .1
+            TextInput:
+                size_hint: .6, 1
+                font_size: "20sp"
+            Button:
+                text: "Change Password"
+                color: 0, 0, 0, 1
+                size_hint: .4, 1
+        Label:
+            text: ""
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .1
+            padding_x: 20
+            halign: "center"
+        Label:
+            text: ""
+            size_hint: 1, .6
+
+<FileChooserListView>:
+    canvas.before:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    layout: layout
+    FileChooserListLayout:
+        id: layout
+        controller: root
+
+[FileListEntry@FloatLayout+TreeViewNode]:
+    locked: False
+    entries: []
+    path: ctx.path
+    is_selected: self.path in ctx.controller().selection
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: '48dp' if dp(1) > 1 else '24dp'
+    is_leaf: not ctx.isdir or ctx.name.endswith('..' + ctx.sep) or self.locked
+    on_touch_down: self.collide_point(*args[1].pos) and ctx.controller().entry_touched(self, args[1])
+    on_touch_up: self.collide_point(*args[1].pos) and ctx.controller().entry_released(self, args[1])
+    BoxLayout:
+        pos: root.pos
+        size_hint_x: None
+        width: root.width - dp(10)
+        Label:
+            color: 0, 0, 0, 1
+            id: filename
+            text_size: self.width, None
+            halign: 'left'
+            shorten: True
+            text: ctx.name
+        Label:
+            color: 0, 0, 0, 1
+            text_size: self.width, None
+            size_hint_x: None
+            halign: 'right'
+            text: '{}'.format(ctx.get_nice_size())
+
+
+<WallpaperScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Wallpaper"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: .4, .2
+        FileChooserListView:
+            size_hint: 1, .5
+        Label:
+            text: ""
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .1
+            padding_x: 20
+            halign: "center"
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, .1
+            Button:
+                text: "Change Home Screen"
+                color: 0, 0, 0, 1
+                size_hint: .5, 1
+            Button:
+                text: "Change Lock Screen"
+                color: 0, 0, 0, 1
+                size_hint: .5, 1
+
+<UpdateResourcesScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Update Resources"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: .7, .2
+        Button:
+            text: "Update Resources"
+            color: 0, 0, 0, 1
+            size_hint: 1, .6
+        Label:
+            text: ""
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .1
+            padding_x: 20
+            halign: "center"
