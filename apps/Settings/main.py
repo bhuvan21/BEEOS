@@ -164,6 +164,7 @@ class SettingsScreenManager(ScreenManager):
     def on_enter(self):
         if not first:
             self.get_screen("Splash").entered()
+            first = True
 
 
 controller = SettingsScreenManager()
