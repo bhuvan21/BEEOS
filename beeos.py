@@ -23,6 +23,7 @@ from copy import deepcopy
 
 
 import device_info
+from helperbee import helper
 
 
 Builder.load_file("beeos.kv")
