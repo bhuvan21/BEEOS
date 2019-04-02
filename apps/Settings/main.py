@@ -30,6 +30,7 @@ FIRST = False
 
 class SplashScreen(Screen):
     def entered(self):
+        self.BACK_SCREEN = "Splash"
         self.parent.transition = FadeTransition()
         self.parent.get_screen("Main").entered()
         self.parent.current = "Main"
@@ -37,6 +38,7 @@ class SplashScreen(Screen):
 class SubSettingsScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.BACK_SCREEN = "Main"
     
     def entered(self):
         box = self.children[0]
@@ -55,6 +57,7 @@ class SubSettingsScreen(Screen):
 
 class WifiScreen(Screen):
     def entered(self):
+        self.BACK_SCREEN = "Main"
         self.keyboard = Window.request_keyboard(
             self.keyboard_close, self)
 
@@ -96,6 +99,7 @@ class WifiScreen(Screen):
 
 class SecurityScreen(Screen):
     def entered(self):
+        self.BACK_SCREEN = "Main"
         self.keyboard = Window.request_keyboard(
             self.keyboard_close, self)
         
@@ -123,6 +127,7 @@ class SecurityScreen(Screen):
 
 class WallpaperScreen(Screen):
     def entered(self):
+        self.BACK_SCREEN = "Main"
         self.lock_button = self.children[0].children[0].children[0]
         self.lock_button.on_press = self.change_lock
         self.home_button = self.children[0].children[0].children[1]
@@ -142,6 +147,7 @@ class WallpaperScreen(Screen):
 
 class UpdateResourcesScreen(Screen):
     def entered(self):
+        self.BACK_SCREEN = "Main"
         self.refresh_button = self.children[0].children[1]
         self.refresh_button.on_press = self.refresh
         self.warning = self.children[0].children[0]
