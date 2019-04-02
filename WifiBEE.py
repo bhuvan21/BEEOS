@@ -51,7 +51,7 @@ class WifiBEE():
         ssid = ssid.encode('latin-1').decode('utf8')
         return urllib.parse.unquote(ssid)
 
-    def mobile_connect(ssid, password):
+    def mobile_connect(self, ssid, password):
         cmd = ["wpa_cli", "-i", "wlan0", "reconfigure"]
         str_to_write = '\n#mobile_connect\nnetwork={\n\tssid="%s"\n\tpsk="%s"\n\tpriority=2\n}' % (ssid, password)
 
