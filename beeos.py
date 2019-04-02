@@ -192,7 +192,7 @@ class HomeScreen(Screen):
             app_names = [a["name"] for a in self.apps]
             if current in app_names:
                 for a in self.apps:
-                    if current == app["name"]:
+                    if current == a["name"]:
                         app = a
                 a["sm"].current = a["sm"].previous()
             else:
