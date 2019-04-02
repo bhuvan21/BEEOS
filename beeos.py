@@ -177,7 +177,12 @@ class HomeScreen(Screen):
     def openapp(self, instance):
         print(instance.text)
         self.realparent.current = instance.text
-        
+
+        Clock.schedule_interval(self.check_home, 0.1)
+
+    def check_home(self, dt):
+        if helper.sensors.get_home_button():
+            self.realparent.current = "Home"
 
 
 
