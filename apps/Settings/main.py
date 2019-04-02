@@ -3,6 +3,7 @@ import kivy
 kivy.require('1.10.1')
 
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.config import Config
 from kivy.uix.button import Button
@@ -53,18 +54,44 @@ class SubSettingsScreen(Screen):
 
 class WifiScreen(Screen):
     def entered(self):
-        self.scroll = self.children[0].children[0]
-        self.connected_to = self.children[0].children[1]
+        self.keyboard = Window.request_keyboard(
+            self.keyboard_close, self)
+
+        self.scroll = self.children[0].children[1]
+        self.input = self.children[0].children[2]
+        self.connected_to = self.children[0].children[3]
         self.connected_to.text = self.connected_to.text.split(":")[0] + ": " + helper.wifi.get_current_ssid()
         
+        
+        self.button_ids = []
+
         for network in helper.wifi.get_all_ssids():
             button = Button(on_press=self.connect_to_ssid)
             button.text = network
             self.scroll.children[0].add_widget(button)
         
+        Clock.schedule_interval(self.update_connection_display, 2)
+
+    def keyboard_close(self):
+        self.keyboard = None
+
     def connect_to_ssid(self, instance):
-        #TODO
-        pass
+        helper.wifi.mobile_connect(instance.text, self.input.text)
+    
+    def update_connection_display(self, dt):
+        ssids = helper.wifi.get_all_ssids()
+        current = helper.wifi.get_current_ssid()
+        
+        self.scroll.children[0].children = []
+
+        for network in ssids:
+            button = Button(on_press=self.connect_to_ssid)
+            button.text = network
+            self.scroll.children[0].add_widget(button)
+        
+        self.connected_to.text = self.connected_to.text.split(":")[0] + ": " + helper.wifi.get_current_ssid()
+        
+
 
 class SecurityScreen(Screen):
     def entered(self):
