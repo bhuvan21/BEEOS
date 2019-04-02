@@ -193,6 +193,10 @@ class HomeScreen(Screen):
             app_names = [a["name"] for a in self.apps]
             if current in app_names:
                 sm = self.realparent.get_screen(self.realparent.current).children[0]
+                try:
+                    sm.get_screen(sm.current).leaving()
+                except:
+                    pass
                 sm.current = sm.get_screen(sm.current).BACK_SCREEN
             else:
                 self.realparent.current = "Home"

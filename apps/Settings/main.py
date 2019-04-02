@@ -94,7 +94,9 @@ class WifiScreen(Screen):
             self.scroll.children[0].add_widget(button)
         
         self.connected_to.text = self.connected_to.text.split(":")[0] + ": " + helper.wifi.get_current_ssid()
-        
+    
+    def leaving(self):
+        self.keyboard_close()
 
 
 class SecurityScreen(Screen):
@@ -124,6 +126,9 @@ class SecurityScreen(Screen):
 
             self.warning.text = "Password changed!"
             set_password(password)
+    
+    def leaving(self):
+        self.keyboard_close()
 
 class WallpaperScreen(Screen):
     def entered(self):
