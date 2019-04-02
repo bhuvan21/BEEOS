@@ -125,8 +125,10 @@ class HomeScreen(Screen):
         self.names = [app for app in os.listdir(os.getcwd()+"/apps/") if app[0] != "."]
         self.paths = [os.getcwd() + "/apps/" + app for app in self.names]
         self.apps = []
+        
             
     def ready(self, parent):
+        Clock.schedule_interval(self.check_buttons, 0.1)
         self.bg.source = device_info.get_home_image()
         for i in range(len(self.names)-1, -1, -1):
             name = self.names[i]
@@ -179,7 +181,7 @@ class HomeScreen(Screen):
         print(instance.text)
         self.realparent.current = instance.text
 
-        Clock.schedule_interval(self.check_buttons, 0.1)
+        
 
     def check_buttons(self, dt):
         if helper.sensors.get_home_button():
