@@ -196,7 +196,7 @@ class HomeScreen(Screen):
                 try:
                     sm.get_screen(sm.current).leaving()
                 except:
-                    pass
+                    print("Leaving doesn't exist")
                 sm.current = sm.get_screen(sm.current).BACK_SCREEN
             else:
                 self.realparent.current = "Home"
