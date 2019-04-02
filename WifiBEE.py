@@ -11,7 +11,6 @@ class WifiBEE():
 
         cmd = ["sudo", "iw", "wlan0", "scan"]
 
-        return ["SSID1", "SSID2", "SSID3"]
         while block:
             try:
                 network_data = subprocess.check_output(cmd)
