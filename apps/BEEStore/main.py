@@ -20,6 +20,7 @@ import queue
 import subprocess
 
 APP_NAME = "BEEStore"
+FIRST = False
 
 
 Builder.load_file(helper.get_app_path() + APP_NAME + "/BEEStore.kv")
@@ -184,7 +185,9 @@ class DetailAppScreen(Screen):
 
 class BEEStoreScreenManager(ScreenManager):
     def on_enter(self):
-        self.get_screen("Splash").entered()
+        if not FIRST:
+            self.get_screen("Splash").entered()
+            FIRST = True
 
 
 

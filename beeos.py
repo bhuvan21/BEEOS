@@ -187,7 +187,16 @@ class HomeScreen(Screen):
         if helper.sensors.get_home_button():
             self.realparent.current = "Home"
         elif helper.sensors.get_back_button():
-            self.realparent.current = self.realparent.previous()
+            #self.realparent.current = self.realparent.previous()
+            current = self.realparent.current
+            app_names = [a["name"] for a in self.apps]
+            if current in app_names:
+                for a in self.apps:
+                    if current == app["name"]:
+                        app = a
+                a["sm"].current = a["sm"].previous()
+            else:
+                self.realparent.current = "Home"
 
 
 
