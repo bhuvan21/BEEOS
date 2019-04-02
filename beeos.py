@@ -180,6 +180,7 @@ class HomeScreen(Screen):
     def openapp(self, instance):
         print(instance.text)
         self.realparent.current = instance.text
+        self.current_app = instance.text
 
         
 
@@ -195,7 +196,7 @@ class HomeScreen(Screen):
                     if current == a["name"]:
                         app = a
                 print(a["sm"].current, a["sm"].previous())
-                a["sm"].current = a["sm"].previous()
+                print(self.realparent.get_screen(self.realparent.current).children[0].current)
             else:
                 self.realparent.current = "Home"
 
