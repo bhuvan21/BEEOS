@@ -26,7 +26,7 @@ SUBSETTINGS_CATEGORIES = ["Wifi", "Security", "Wallpaper", "Update Resources"]
 BOOK_EXTENSIONS = ["epub"]
 MUSIC_EXTENSIONS = ["mp3"]
 
-first = False
+FIRST = False
 
 class SplashScreen(Screen):
     def entered(self):
@@ -162,9 +162,9 @@ class UpdateResourcesScreen(Screen):
 
 class SettingsScreenManager(ScreenManager):
     def on_enter(self):
-        if not first:
+        if not FIRST:
             self.get_screen("Splash").entered()
-            first = True
+            FIRST = True
 
 
 controller = SettingsScreenManager()
