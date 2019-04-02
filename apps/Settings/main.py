@@ -39,7 +39,7 @@ class SubSettingsScreen(Screen):
     
     def entered(self):
         box = self.children[0]
-        box.add_widget(Renderer())
+        #box.add_widget(Renderer())
         for category in SUBSETTINGS_CATEGORIES:
             button = Button(on_press=self.goto_subsetting)
             button.size_hint = (None, None)
