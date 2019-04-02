@@ -162,6 +162,7 @@ class UpdateResourcesScreen(Screen):
 
 class SettingsScreenManager(ScreenManager):
     def on_enter(self):
+        global FIRST
         if not FIRST:
             self.get_screen("Splash").entered()
             FIRST = True
