@@ -30,7 +30,7 @@ class WifiBEE():
         return ssids
         
 
-    def get_current_ssid(block=True):
+    def get_current_ssid(self, block=True):
         command = ['iwgetid', '-r']
         try:
             
@@ -46,7 +46,7 @@ class WifiBEE():
             print(e)
             return "DummySSID"
 
-    def from_hex_unicode_rep(ssid, self):
+    def from_hex_unicode_rep(self, ssid):
         ssid = ssid.decode('unicode-escape')
         ssid = ssid.encode('latin-1').decode('utf8')
         return urllib.parse.unquote(ssid)
