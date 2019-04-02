@@ -179,11 +179,13 @@ class HomeScreen(Screen):
         print(instance.text)
         self.realparent.current = instance.text
 
-        Clock.schedule_interval(self.check_home, 0.1)
+        Clock.schedule_interval(self.check_buttons, 0.1)
 
-    def check_home(self, dt):
+    def check_buttons(self, dt):
         if helper.sensors.get_home_button():
             self.realparent.current = "Home"
+        elif helper.sensors.get_back_button():
+            self.realparent.current = self.realparent.previous()
 
 
 
