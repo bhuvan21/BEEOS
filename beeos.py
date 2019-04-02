@@ -194,6 +194,7 @@ class HomeScreen(Screen):
                 for a in self.apps:
                     if current == a["name"]:
                         app = a
+                print(a["sm"].current, a["sm"].previous())
                 a["sm"].current = a["sm"].previous()
             else:
                 self.realparent.current = "Home"
