@@ -42,7 +42,8 @@ class WifiBEE():
                     time.sleep(0.5)
 
             return self.from_hex_unicode_rep(connection_data)[:-1]
-        except:
+        except Exception as e:
+            print(e)
             return "DummySSID"
 
     def from_hex_unicode_rep(ssid, self):
