@@ -22,7 +22,7 @@ Builder.load_file(helper.get_app_path() + APP_NAME + "/settings.kv")
 Config.set('graphics', 'width', '480')
 Config.set('graphics', 'height', '800')
 
-SUBSETTINGS_CATEGORIES = ["Wifi", "Security", "Wallpaper", "Update Resources"]
+SUBSETTINGS_CATEGORIES = ["Wifi", "Security", "Wallpaper", "Update Resources", "Brightness"]
 BOOK_EXTENSIONS = ["epub"]
 MUSIC_EXTENSIONS = ["mp3"]
 
@@ -169,7 +169,25 @@ class UpdateResourcesScreen(Screen):
             else:
                 directory = "/other/"
             fp = helper.email.save_attachment(mail[1], download_folder="/" + "/".join(os.getcwd().split("/")[1:-1]) + directory)
-            
+
+class BrightnessScreen(Screen):
+    def entered(self):
+        self.BACK_SCREEN = "Main"
+
+        self.warning = self.children[0].children[1]
+        self.set_button = self.children[0].children[2].children[0]
+        self.slider = self.children[0].children[3].children[0]
+        self.slider.max = 255
+        self.slider.min = 0
+        self.slider.step = 1
+
+        self.set_button.on_press = self.set_brightness
+    
+    def set_brightness(self):
+        val = self.slider.value
+        self.warning.text = "Set brightness to {}/255".format(int(val))
+        helper.set_display_brightness(val)
+
 
 class SettingsScreenManager(ScreenManager):
     def on_enter(self):
@@ -186,6 +204,7 @@ controller.add_widget(WifiScreen(name="Wifi"))
 controller.add_widget(SecurityScreen(name="Security"))
 controller.add_widget(WallpaperScreen(name="Wallpaper"))
 controller.add_widget(UpdateResourcesScreen(name="Update Resources"))
+controller.add_widget(BrightnessScreen(name="Brightness"))
 
 def get_app():
     return controller

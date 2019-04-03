@@ -191,3 +191,40 @@
             size_hint: 1, .1
             padding_x: 20
             halign: "center"
+
+<BrightnessScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Brightness"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: .7, .2
+        AnchorLayout:
+            size_hint: 1, .2
+            Slider:
+                orientation: "horizontal"
+                size_hint: .7, 1
+        AnchorLayout:
+            size_hint: 1, .2
+            Button:
+                text: "Set Brightness"
+                color: 0, 0, 0, 1
+                size_hint: .7, 1
+        Label:
+            text: ""
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .2
+            padding_x: 20
+            halign: "center"
+        Label:
+            text: ""
+            size_hint: 1, .2

@@ -8,6 +8,7 @@ class HelperBEE:
         self.sensors = SensorBEE()
         self.wifi = WifiBEE()
         self.email = EmailBEE()
+        os.system("gpio -g mode 19 pwm")
 
     def get_app_path(self):
         return os.getcwd() + "/apps/"
@@ -17,5 +18,17 @@ class HelperBEE:
     
     def get_installed_apps(self):
         return [app for app in os.listdir(HelperBEE.get_path()+"/apps/") if app[0] != "."]
+    
+    def sleep_display(self):
+        os.system("DISPLAY=:0.0 xset dpms force off")
+
+    def wake_display(self):
+        os.system("DISPLAY=:0.0 xset dpms force on")
+    
+    def set_display_brightness(self, val):
+        if not(0 <= val <= 255):
+            return
+        os.system("gpio -g pwm 19 {}".format(25 + (val/255.0*75)))
+
 
 helper = HelperBEE()

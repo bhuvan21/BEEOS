@@ -1,0 +1,33 @@
+<TemperatureScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        AnchorLayout:
+            size_hint: 1, .2
+            Label:
+                text: "Temperature"
+                color: 0, 0, 0, 1
+                font_size: "40sp"
+                size_hint: 1, 1
+        AnchorLayout:
+            size_hint: 1, .4
+            Label:
+                text: ""
+                color: 0, 0, 0, 1
+                size_hint: .7, 1
+        Label:
+            text: ""
+            color: 0, 0, 0, 1
+            font_size: "25sp"
+            text_size: self.size
+            size_hint: 1, .2
+            padding_x: 20
+            halign: "center"
+        Label:
+            text: ""
+            size_hint: 1, .2

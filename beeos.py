@@ -87,6 +87,10 @@ class PINLockScreen(Screen):
                 self.password = ""
                 self.shake_screen()
     
+    def reset(self):
+        self.password = ""
+        self.draw_empty_dots()
+    
         
         
 class RestingLockScreen(Screen):
@@ -125,6 +129,8 @@ class HomeScreen(Screen):
         self.names = [app for app in os.listdir(os.getcwd()+"/apps/") if app[0] != "."]
         self.paths = [os.getcwd() + "/apps/" + app for app in self.names]
         self.apps = []
+
+        self.sleeping = False
         
             
     def ready(self, parent):
@@ -185,10 +191,10 @@ class HomeScreen(Screen):
         
 
     def check_buttons(self, dt):
-        if helper.sensors.get_home_button():
+        values = helper.sensors.get_formatted()
+        if values["home"]:
             self.realparent.current = "Home"
-        elif helper.sensors.get_back_button():
-            #self.realparent.current = self.realparent.previous()
+        elif values["back"]:
             current = self.realparent.current
             app_names = [a["name"] for a in self.apps]
             if current in app_names:
@@ -200,6 +206,20 @@ class HomeScreen(Screen):
                 sm.current = sm.get_screen(sm.current).BACK_SCREEN
             else:
                 self.realparent.current = "Home"
+        
+        volume = int(1023 - values["volume"])/4
+        #TODO SET VOLUME
+
+        if values["proximity"] > 100:
+            self.get_screen("Lock").reset()
+            self.realparent.current = "Lock"
+            helper.sleep_display()
+            self.sleeping = True
+
+        if self.sleeping and values["proximity"] < 100:
+            Clock.schedule(helper.wake_display)
+            
+
 
 
 
@@ -214,22 +234,6 @@ lock_screen.children[0].children[0].children[0].switch_to_home = home_screen
 controller.add_widget(lock_screen)
 controller.add_widget(HomeScreen(name="Home"))
 controller.get_screen("Home").ready(controller)
-
-'''
-input_queue = queue.Queue()
-input_thread = threading.Thread(None, get_presses)
-input_thread.setDaemon(True)
-input_thread.start()
-
-def get_presses():
-    #TODO add to queue if button's pressed
-
-
-def input_manager():
-    #TODO check input_queue and make relevant actions
-
-Clock.schedule_interval(input_manager, 0.1)
-'''
 
 class BEEOSApp(App):
     def build(self):

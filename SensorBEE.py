@@ -2,6 +2,8 @@ import serial
 import threading
 import queue
 
+NAMES = ["option", "back", "home", "volume", "temp", "rawx", "rawy", "rawz", "x", "y", "z", "proximity"]
+
 class SensorBEE():
     def __init__(self, dev_node="ttyACM0"):
         self.dev_node = "/dev/" + dev_node
@@ -23,8 +25,20 @@ class SensorBEE():
         return total
     
     def get_split_values(self):
+        try:
+            self.ser
+        except AttributeError:
+            return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         return [x for x in self.get_raw().split(":") if x != ""]
     
+    def get_formatted(self):
+        vals = self.get_split_values()
+        formatted = {}
+        for name, val in zip(NAMES, vals):
+            formatted[name] = val
+        
+        return formatted
+
     def get_option_button(self):
         return int(self.get_split_values()[0])
     
@@ -60,6 +74,7 @@ class SensorBEE():
 
     def get_proximity(self):
         return int(self.get_split_values()[11])
+
     
 class SmartSensorBee():
     def __init__(self, dev_node="ttyACM0"):

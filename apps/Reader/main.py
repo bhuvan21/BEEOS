@@ -66,6 +66,7 @@ class BooksScreen(Screen):
     
     def goto_read(self, instance):
         #TODO
+        pass
 
 class ReadScreen(Screen):
     def __init__(self, **kwargs):
