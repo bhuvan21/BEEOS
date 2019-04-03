@@ -211,7 +211,7 @@ class HomeScreen(Screen):
         #TODO SET VOLUME
 
         if values["proximity"] > 100:
-            self.get_screen("Lock").reset()
+            self.realparent.get_screen("Lock").reset()
             self.realparent.current = "Lock"
             helper.sleep_display()
             self.sleeping = True
