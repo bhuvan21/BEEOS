@@ -1,3 +1,4 @@
+import os
 import kivy
 kivy.require('1.10.1')
 
@@ -6,18 +7,15 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.config import Config
 from kivy.uix.label import Label
+from kivy.uix.image import Image
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.image import Image, AsyncImage
+
 from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 
 from helperbee import helper
+from EPUBEE import EPUBEE
 
-import xml.etree.ElementTree as ET
-import threading
-import requests
-import queue
-import subprocess
 
 APP_NAME = "Reader"
 FIRST = False
@@ -31,13 +29,20 @@ Config.set('graphics', 'height', '800')
 class BooksScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        if "covers" not in os.listdir(helper.get_app_path() + APP_NAME + "/"):
+            os.mkdir(helper.get_app_path() + APP_NAME + "/covers")
     
     def entered(self):
-        n = 0
         grid = self.children[0].children[0]
         grid.clear_widgets()
-        self.books = []
-        for b in self.books:
+        
+        self.books = {}
+        self.book_filepaths = [helper.get_resources_path() + "/books/" + b for b in os.listdir(helper.get_resources_path() + "/books/")]
+        if self.book_filepaths == []:
+            grid.add_widget(Label(text="No books found :("))
+        
+        n = 0
+        for b in self.book_filepaths:
             n += 1
 
             if n%2 == 0:
@@ -51,13 +56,20 @@ class BooksScreen(Screen):
             layout.pos = (button.pos[0]+70, (grid.height - button.pos[1]) - 50 - 200)
             layout.size = button.size
             layout.orientation = "vertical"
-            '''
-            img = AsyncImage(source=iconurl)
+
+            book_filename = b.split("/")[-1].split(".")[0]
+            book = EPUBEE(b)
+            cover = book.get_cover()
+            cover_path = helper.get_app_path() + APP_NAME + "/covers/" + book_filename + ".jpeg"
+            cover.save(cover_path)
+            self.books[book.title] = book
+
+            img = Image(source=cover_path)
             img.size_hint_x = None
             img.width = 100
-            '''
-
-            lbl = Label(text=name, color=[1, 1, 1, 1], size_hint=(None, None), pos=(button.pos[0], button.pos[1]))
+            img.height = 100
+            
+            lbl = Label(text=book.title, color=[1, 1, 1, 1], size_hint=(None, None), pos=(button.pos[0], button.pos[1]))
             layout.add_widget(img)
             layout.add_widget(lbl)
             button.add_widget(layout)
@@ -65,33 +77,58 @@ class BooksScreen(Screen):
             self.children[0].children[0].add_widget(button)
     
     def goto_read(self, instance):
-        #TODO
-        pass
+        print(self.books, instance.children[0].children[0].text)
+        self.parent.get_screen("Read").book = self.books[instance.children[0].children[0].text]
+        self.parent.get_screen("Read").entered()
+        self.parent.current = "Read"
 
 class ReadScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+        self.book = None
     
     def entered(self):
-        pass
+        self.page = 1
+        self.book_label = self.children[0].children[1].children[0].children[0]
+        self.scroll = self.children[0].children[1].children[0]
+        self.pages = self.book.get_pages()
+        self.book_label.text = self.pages[0]
+        self.progress_label = self.children[0].children[0].children[2]
+        self.progress_label.text = "{}/{}".format(self.page, len(self.pages))
+        self.previous_page = self.children[0].children[0].children[1]
+        self.previous_page.on_press = self.show_previous_page
+        self.next_page = self.children[0].children[0].children[0]
+        self.next_page.on_press = self.show_next_page
+
     
-    def leaving(self):
-        pass
+    def show_next_page(self):
+        if self.page != len(self.pages):
+            self.page += 1
+            self.book_label.text = self.pages[self.page-1]
+            self.progress_label.text = "{}/{}".format(self.page, len(self.pages))
+            self.scroll.scroll_y = 1
+
+    def show_previous_page(self):
+        if self.page != 1:
+            self.page -= 1
+            self.book_label.text = self.pages[self.page-1]
+            self.progress_label.text = "{}/{}".format(self.page, len(self.pages))
+            self.scroll.scroll_y = 0
+    
         
 
 
-class BEEStoreScreenManager(ScreenManager):
+class ReaderScreenManager(ScreenManager):
     def on_enter(self):
+        global FIRST
         if not FIRST:
             self.get_screen("Splash").entered()
             FIRST = True
 
 
 
-controller = BEEStoreScreenManager()
+controller = ReaderScreenManager()
 main = BooksScreen(name="Splash")
-#main.children[0].children[1].source = helper.get_bee_path() + "/images/UI/loading.gif"
 controller.add_widget(main)
 controller.add_widget(ReadScreen(name="Read"))
 

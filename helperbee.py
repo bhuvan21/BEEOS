@@ -18,6 +18,9 @@ class HelperBEE:
     def get_bee_path(self):
         return os.getcwd()
     
+    def get_resources_path(self):
+        return "/" + "/".join(self.get_bee_path().split("/")[:-1])
+    
     def get_installed_apps(self):
         return [app for app in os.listdir(HelperBEE.get_path()+"/apps/") if app[0] != "."]
     
