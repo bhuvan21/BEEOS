@@ -24,10 +24,10 @@ class TemperatureScreen(Screen):
         self.info = self.children[0].children[1]
         self.temp = self.children[0].children[2].children[0]
         
-        self.update_temperature()
+        self.update_temperature(None)
         Clock.schedule_interval(self.update_temperature, 0.5)
 
-    def update_temperature(self):
+    def update_temperature(self, dt):
         temperature = helper.sensors.get_temperature()
         self.temp.text = "{}°C".format(temperature)
         self.info = "TODO"
