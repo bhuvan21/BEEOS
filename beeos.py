@@ -106,9 +106,9 @@ class LockCarousel(Carousel):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         
-        screen1 = PINLockScreen(name="PINLockScreen")
-        screen1.cancel_button.bind(on_press=self.load_next)
-        self.add_widget(screen1)
+        self.screen1 = PINLockScreen(name="PINLockScreen")
+        self.screen1.cancel_button.bind(on_press=self.load_next)
+        self.add_widget(self.screen1)
         self.add_widget(RestingLockScreen(name="RestingLockScreen"))
 
 class LockScreen(Screen):
@@ -116,10 +116,14 @@ class LockScreen(Screen):
         super().__init__(**kwargs)
         self.bg = Image(source=device_info.get_lock_image())
         self.add_widget(self.bg)
-        self.add_widget(LockCarousel())
+        self.carousel = LockCarousel()
+        self.add_widget(self.carousel)
     
     def ready(self):
         self.bg.source = device_info.get_lock_image()
+    
+    def reset(self):
+        self.carousel.screen1.reset()
         
 class HomeScreen(Screen):
     def __init__(self, **kwargs):
