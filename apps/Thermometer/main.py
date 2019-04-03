@@ -38,7 +38,7 @@ class TemperatureScreenManager(ScreenManager):
             self.get_screen("Main").entered()
             FIRST = True
 
-controller = ScreenManager()
+controller = TemperatureScreenManager()
 controller.add_widget(TemperatureScreen(name="Main"))
 
 def get_app():
