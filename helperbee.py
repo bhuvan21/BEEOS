@@ -20,10 +20,10 @@ class HelperBEE:
     def get_installed_apps(self):
         return [app for app in os.listdir(HelperBEE.get_path()+"/apps/") if app[0] != "."]
     
-    def sleep_display(self):
+    def sleep_display(self, **kwargs):
         os.system("DISPLAY=:0.0 xset dpms force off")
 
-    def wake_display(self):
+    def wake_display(self, **kwargs):
         os.system("DISPLAY=:0.0 xset dpms force on")
     
     def set_display_brightness(self, val):
