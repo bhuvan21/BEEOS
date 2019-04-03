@@ -221,11 +221,12 @@ class HomeScreen(Screen):
             self.sleeping = True
 
         if self.sleeping and values["proximity"] < 100:
-            Clock.schedule_once(helper.wake_display, 2)
+            Clock.schedule_once(self.wake_display, 2)
             self.sleeping = False
 
 
-
+    def wake_display(self, dt):
+        helper.wake_display()
 
 controller = ScreenManager()
 
