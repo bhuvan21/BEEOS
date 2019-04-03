@@ -27,7 +27,7 @@ class TemperatureScreen(Screen):
         self.update_temperature()
         Clock.schedule_interval(self.update_temperature, 0.5)
 
-    def update_temperature(self, dt):
+    def update_temperature(self):
         temperature = helper.sensors.get_temperature()
         self.temp.text = "{}°C".format(temperature)
         self.info = "TODO"
