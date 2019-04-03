@@ -34,6 +34,7 @@ class TemperatureScreen(Screen):
 
 class TemperatureScreenManager(ScreenManager):
     def on_enter(self):
+        global FIRST
         if not FIRST:
             self.get_screen("Main").entered()
             FIRST = True
@@ -45,4 +46,4 @@ def get_app():
     return controller
 
 def get_icon():
-    return "testicon.png"
+    return "icon.png"
