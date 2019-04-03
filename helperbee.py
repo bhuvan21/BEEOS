@@ -28,7 +28,7 @@ class HelperBEE:
         os.system("gpio -g pwm 19 0")
     
     def hard_wake_display(self):
-        os.system("gpio -g pwm 19 {}".format(val))
+        os.system("gpio -g pwm 19 {}".format(self.brightness))
 
     def wake_display(self):
         os.system("DISPLAY=:0.0 xset dpms force on")
