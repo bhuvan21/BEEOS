@@ -217,7 +217,7 @@ class HomeScreen(Screen):
         if values["proximity"] > 100:
             self.realparent.get_screen("Lock").reset()
             self.realparent.current = "Lock"
-            helper.sleep_display()
+            helper.hard_sleep_display()
             print("sleeping")
             self.sleeping = True
 
@@ -227,7 +227,7 @@ class HomeScreen(Screen):
 
 
     def wake_display(self, dt):
-        helper.wake_display()
+        helper.hard_wake_display()
         print("waking")
 
 controller = ScreenManager()

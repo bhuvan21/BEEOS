@@ -10,6 +10,7 @@ class HelperBEE:
         self.email = EmailBEE()
         os.system("gpio -g mode 19 pwm")
         self.set_display_brightness(255)
+        self.brightness = 255
 
     def get_app_path(self):
         return os.getcwd() + "/apps/"
@@ -22,6 +23,12 @@ class HelperBEE:
     
     def sleep_display(self):
         os.system("DISPLAY=:0.0 xset dpms force off")
+    
+    def hard_sleep_display(self):
+        os.system("gpio -g pwm 19 0")
+    
+    def hard_wake_display(self):
+        os.system("gpio -g pwm 19 {}".format(val))
 
     def wake_display(self):
         os.system("DISPLAY=:0.0 xset dpms force on")
@@ -30,6 +37,7 @@ class HelperBEE:
         if not(0 <= val <= 255):
             return
         os.system("gpio -g pwm 19 {}".format(25 + (val/255.0*75)))
+        self.brightness = val
 
 
 helper = HelperBEE()
