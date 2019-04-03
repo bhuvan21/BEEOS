@@ -35,7 +35,8 @@ class SensorBEE():
         vals = self.get_split_values()
         formatted = {}
         for name, val in zip(NAMES, vals):
-            formatted[name] = val
+            
+            formatted[name] = float(val)
         
         return formatted
 

@@ -9,6 +9,7 @@ class HelperBEE:
         self.wifi = WifiBEE()
         self.email = EmailBEE()
         os.system("gpio -g mode 19 pwm")
+        self.set_display_brightness(255)
 
     def get_app_path(self):
         return os.getcwd() + "/apps/"
