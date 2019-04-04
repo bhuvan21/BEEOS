@@ -29,6 +29,7 @@ Config.set('graphics', 'height', '800')
 class BooksScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.BACK_SCREEN = "Splash"
         if "covers" not in os.listdir(helper.get_app_path() + APP_NAME + "/"):
             os.mkdir(helper.get_app_path() + APP_NAME + "/covers")
     
@@ -86,6 +87,7 @@ class ReadScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.book = None
+        self.BACK_SCREEN = "Splash"
     
     def entered(self):
         self.page = 1

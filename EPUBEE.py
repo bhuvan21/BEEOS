@@ -4,7 +4,7 @@ import PIL
 import ebooklib
 from ebooklib import epub
 from bs4 import BeautifulSoup
-
+import bs4
 
 class EPUBEE():
     def __init__(self, filename):
@@ -21,16 +21,23 @@ class EPUBEE():
 
     def get_whole_text(self):
         self.html_text = ""
+        print("Going through {} documents".format(len(self.documents)))
         for d in self.documents:
             self.html_text += d.get_body_content().decode()
         self.whole_text = ""
-        soup = BeautifulSoup(self.html_text, "html.parser")
+        print("Making the Soup")
+        strainer = bs4.SoupStrainer("p")
+        soup = BeautifulSoup(self.html_text, "lxml", parse_only=strainer)
+        print("Soup made!")
+        n = 0
         for para in soup.find_all("p"):
             if para.text != "":
                 self.whole_text += para.text + "\n"
-
+            n += 1
+            if n %100 == 0:
+                print(n)
         return self.whole_text
     
     def get_pages(self):
         text = self.get_whole_text()
-        return [text[i:i+20000] for i in range(0, len(text), 20000)]
+        return [text[i:i+5000] for i in range(0, len(text), 5000)]
