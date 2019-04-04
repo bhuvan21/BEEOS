@@ -1,4 +1,10 @@
 import os
+import bs4
+import queue
+import ebooklib
+import threading
+from ebooklib import epub
+
 import kivy
 kivy.require('1.10.1')
 
@@ -169,6 +175,82 @@ class UpdateResourcesScreen(Screen):
             else:
                 directory = "/other/"
             fp = helper.email.save_attachment(mail[1], download_folder="/" + "/".join(os.getcwd().split("/")[1:-1]) + directory)
+            if directory == "/books/":
+                self.parent.transition = FadeTransition()
+                self.parent.get_screen("ProcessBook").filepath = fp
+                self.parent.get_screen("ProcessBook").entered()
+                self.parent.current = "ProcessBook"
+
+
+class ProcessBookScreen(Screen):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.filepath = ""
+
+    def entered(self):
+        self.BACK_SCREEN = "Update Resources"
+        self.thread = threading.Thread(target=self.format_book)
+        self.thread.setDaemon(True)
+        self.queue = queue.Queue()
+        self.thread.start()
+        self.update_progress(1)
+        Clock.schedule_interval(self.update_progress, .1)
+    
+    def format_book(self):
+
+        self.info = self.children[0].children[1].children[0]
+        self.progress = self.children[0].children[2].children[0]
+        
+        self.queue.put("0:100:Reading EPUB")
+        pub = epub.read_epub(self.filepath)
+        self.queue.put("100:100:Reading EPUB")
+        docs = [d for d in pub.get_items_of_type(ebooklib.ITEM_DOCUMENT)]
+        self.queue.put("0:{}:Extracting relevant HTML".format(len(docs)))
+        html_text = ""
+        for i, d in enumerate(docs):
+            html_text += d.get_body_content().decode()
+            self.queue.put("{}:{}:Extracting relevant HTML".format(i, len(docs)))
+
+        whole_text = ""
+        self.queue.put("0:100:Making the Soup - might take a while")
+        strainer = bs4.SoupStrainer("p")
+        self.queue.put("20:100:Making the Soup - might take a while")
+        soup = bs4.BeautifulSoup(html_text, "lxml", parse_only=strainer)
+        self.queue.put("100:100:Soup made!")
+        paras = [p for p in soup.find_all("p")]
+        self.queue.put("0:{}:Extracting text".format(len(paras)))
+
+        whole_text = ""
+        for i, para in enumerate(paras):
+            if para.text != "":
+                whole_text += para.text + "\n"
+            if i %100 == 0:
+                self.queue.put("{}:{}:Extracting text".format(i, len(paras)))
+
+        self.queue.put("0:100:Writing to disk...")
+        path_to_save = helper.get_app_path() + "Reader/texts/{}.txt".format(self.filepath.split("/")[-1].split(".")[0])
+        with open(path_to_save, "w") as f:
+            f.write(whole_text)
+
+        
+        self.queue.put("100:100:All done! Feel free to leave.")
+
+    def update_progress(self, dt):
+        reading = None
+        while True:
+            try:
+                reading = self.queue.get(block=False)
+            except queue.Empty:
+                break
+        if reading is None:
+            return
+        
+        self.progress.max = int(reading.split(":")[1])
+        self.progress.value = int(reading.split(":")[0])
+        self.info.text = reading.split(":")[2]
+
+
+
 
 class BrightnessScreen(Screen):
     def entered(self):
@@ -204,7 +286,9 @@ controller.add_widget(WifiScreen(name="Wifi"))
 controller.add_widget(SecurityScreen(name="Security"))
 controller.add_widget(WallpaperScreen(name="Wallpaper"))
 controller.add_widget(UpdateResourcesScreen(name="Update Resources"))
+controller.add_widget(ProcessBookScreen(name="ProcessBook"))
 controller.add_widget(BrightnessScreen(name="Brightness"))
+
 
 def get_app():
     return controller

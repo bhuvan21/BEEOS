@@ -192,6 +192,37 @@
             padding_x: 20
             halign: "center"
 
+<ProcessBookScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Process Book"
+            color: 0, 0, 0, 1
+            font_size: "40sp"
+            size_hint: .7, .2
+        AnchorLayout:
+            size_hint: 1, .3
+            ProgressBar:
+                size_hint: .8, 1
+        AnchorLayout:
+            size_hint: 1, .2
+            Label:
+                text: ""
+                color: 0, 0, 0, 1
+                font_size: "25sp"
+                text_size: self.size
+                size_hint: .8, 1
+                halign: "center"
+        Label:
+            text: ""
+            size_hint: 1, .3
+
 <BrightnessScreen>:
     canvas.before:
         Color:

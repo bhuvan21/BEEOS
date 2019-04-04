@@ -32,6 +32,8 @@ class BooksScreen(Screen):
         self.BACK_SCREEN = "Splash"
         if "covers" not in os.listdir(helper.get_app_path() + APP_NAME + "/"):
             os.mkdir(helper.get_app_path() + APP_NAME + "/covers")
+        if "texts" not in os.listdir(helper.get_app_path() + APP_NAME + "/"):
+            os.mkdir(helper.get_app_path() + APP_NAME + "/texts")
     
     def entered(self):
         grid = self.children[0].children[0]
@@ -58,10 +60,10 @@ class BooksScreen(Screen):
             layout.size = button.size
             layout.orientation = "vertical"
 
-            book_filename = b.split("/")[-1].split(".")[0]
+            self.book_filename = b.split("/")[-1].split(".")[0]
             book = EPUBEE(b)
             cover = book.get_cover()
-            cover_path = helper.get_app_path() + APP_NAME + "/covers/" + book_filename + ".jpeg"
+            cover_path = helper.get_app_path() + APP_NAME + "/covers/" + self.book_filename + ".jpeg"
             cover.save(cover_path)
             self.books[book.title] = book
 
@@ -80,6 +82,7 @@ class BooksScreen(Screen):
     def goto_read(self, instance):
         print(self.books, instance.children[0].children[0].text)
         self.parent.get_screen("Read").book = self.books[instance.children[0].children[0].text]
+        self.parent.get_screen("Read").book_filename = self.book_filename
         self.parent.get_screen("Read").entered()
         self.parent.current = "Read"
 
@@ -87,13 +90,16 @@ class ReadScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.book = None
+        self.book_filename = None
         self.BACK_SCREEN = "Splash"
     
     def entered(self):
         self.page = 1
         self.book_label = self.children[0].children[1].children[0].children[0]
         self.scroll = self.children[0].children[1].children[0]
-        self.pages = self.book.get_pages()
+        with open(helper.get_app_path() + APP_NAME + "/texts/" + self.book_filename + ".txt") as f:
+            text = f.read()
+        self.pages = [text[i:i+5000] for i in range(0, len(text), 5000)]
         self.book_label.text = self.pages[0]
         self.progress_label = self.children[0].children[0].children[2]
         self.progress_label.text = "{}/{}".format(self.page, len(self.pages))
