@@ -1,0 +1,42 @@
+<ChoicesScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        orientation: "vertical"
+        AnchorLayout:
+            size_hint: 1, .1
+            Label:
+                text: "Music"
+                color: 0, 0, 0, 1
+                font_size: "40sp"
+        AnchorLayout:
+            size_hint: 1, .1
+            Button:
+                text: "Playlists"
+                font_size: "25sp"
+        AnchorLayout:
+            size_hint: 1, .7
+            ScrollView:
+                size_hint: .9, 1
+                GridLayout:
+                    cols: 1
+                    size_hint_y: None
+                    row_default_height: '50dp'
+                    row_force_default: True
+                    height: self.minimum_height
+        
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, .1
+            Label:
+                size_hint: .8, 1
+                text: ""
+            Button:
+                size_hint: .2, 1
+                text: "||"
+                font_size: "25sp"
+                    
