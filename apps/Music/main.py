@@ -33,7 +33,7 @@ class ChoicesScreen(Screen):
         self.song_name = self.children[0].children[0].children[1]
         self.song_name.text = "Not Playing"
         self.paused = True
-        self.pause_button.text = ">"
+        self.pause_button.text = "||"
 
         song_filenames = os.listdir(helper.get_resources_path() + "/music/")
         for song in song_filenames:

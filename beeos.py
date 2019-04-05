@@ -23,7 +23,9 @@ from copy import deepcopy
 
 
 import device_info
+from MusicBEE import player
 from helperbee import helper
+
 
 
 Builder.load_file("beeos.kv")
@@ -211,8 +213,8 @@ class HomeScreen(Screen):
             else:
                 self.realparent.current = "Home"
         
-        volume = int(1023 - values["volume"])/4
-        #TODO SET VOLUME
+        volume = int(1023 - values["volume"]/4)
+        player.set_volume(volume)
 
         if values["proximity"] > 100:
             self.realparent.get_screen("Lock").reset()

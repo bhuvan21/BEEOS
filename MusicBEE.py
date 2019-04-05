@@ -39,5 +39,11 @@ class MusicBEE():
     def pause(self):
         self.proc.sendline("pause")
         self.proc.expect("> ")
+    
+    def set_volume(self, val):
+        if not(0 <= val <= 256):
+            return
+        self.proc.sendline("volume {}".format(str(int(val)))
+        self.proc.expect("> ")
 
 player = MusicBEE()
