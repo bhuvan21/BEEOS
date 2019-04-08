@@ -142,7 +142,7 @@ class DetailAppScreen(Screen):
         activity = Image(source=helper.get_bee_path() + "/images/UI/loading.gif")
         activity.anim_delay = 1/24
         self.button_container.add_widget(activity)
-        self.thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helper.get_path(), self.app.findall("cloneurl")[0].text), shell=True))
+        self.thread = threading.Thread(None, lambda:subprocess.run("cd {}/apps/ && git clone {}".format(helper.get_bee_path(), self.app.findall("cloneurl")[0].text), shell=True))
         self.thread.setDaemon(True)
     
         self.thread.start()
@@ -173,7 +173,7 @@ class DetailAppScreen(Screen):
         self.button_container.children[0].on_press = self.remove_app
     
     def remove_app(self):
-        subprocess.run("sudo rm -rf {}/apps/{}".format(helper.get_path(), self.app.findall("reponame")[0].text), shell=True)
+        subprocess.run("sudo rm -rf {}/apps/{}".format(helper.get_bee_path(), self.app.findall("reponame")[0].text), shell=True)
         self.restore_default()
 
     def back(self):
@@ -185,6 +185,7 @@ class DetailAppScreen(Screen):
 
 class BEEStoreScreenManager(ScreenManager):
     def on_enter(self):
+        global FIRST
         if not FIRST:
             self.get_screen("Splash").entered()
             FIRST = True

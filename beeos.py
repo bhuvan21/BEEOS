@@ -213,7 +213,7 @@ class HomeScreen(Screen):
             else:
                 self.realparent.current = "Home"
         
-        volume = int(1023 - values["volume"]/4)
+        volume = int((1023 - values["volume"])/4)
         player.set_volume(volume)
 
         if values["proximity"] > 100:

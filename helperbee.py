@@ -22,7 +22,7 @@ class HelperBEE:
         return "/" + "/".join(self.get_bee_path().split("/")[:-1])
     
     def get_installed_apps(self):
-        return [app for app in os.listdir(HelperBEE.get_path()+"/apps/") if app[0] != "."]
+        return [app for app in os.listdir(self.get_bee_path()+"/apps/") if app[0] != "."]
     
     def sleep_display(self):
         os.system("DISPLAY=:0.0 xset dpms force off")

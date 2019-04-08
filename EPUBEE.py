@@ -8,6 +8,7 @@ import bs4
 
 class EPUBEE():
     def __init__(self, filename):
+        self.filename = filename
         self.epub = epub.read_epub(filename)
         self.title = self.epub.get_metadata("DC", "title")[0][0]
         self.author = self.epub.get_metadata("DC", "creator")[0][0]
@@ -15,7 +16,11 @@ class EPUBEE():
         
     def get_cover(self):    
         self.images = [d for d in self.epub.get_items_of_type(ebooklib.ITEM_IMAGE)]
-        cover = self.images[0]
+        try:
+            cover = self.images[0]
+        except IndexError:
+            print(self.title, self.filename)
+            return ""
         self.cover = PIL.Image.open(io.BytesIO(cover.get_content()))
         return self.cover
 
