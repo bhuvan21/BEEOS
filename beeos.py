@@ -223,7 +223,7 @@ class HomeScreen(Screen):
             self.sleeping = True
 
         if self.sleeping and values["proximity"] < 100:
-            Clock.schedule_once(self.wake_display, 1)
+            Clock.schedule_once(self.wake_display, 0.5)
             self.sleeping = False
 
 
