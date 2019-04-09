@@ -15,6 +15,18 @@
             size: self.size
     BoxLayout:
         orientation: "vertical"
+        AnchorLayout:
+            size_hint: 1, .2
+            Label:
+                text: "Settings"
+                color: 0, 0, 0, 1
+                font_size: "40sp"
+                size_hint: 1, 1
+        BoxLayout:
+            size_hint: 1, .8
+            orientation: "vertical"
+        
+        
 
 <WifiScreen>:
     canvas.before:
@@ -65,16 +77,18 @@
             color: 0, 0, 0, 1
             font_size: "40sp"
             size_hint: .4, .2
-        BoxLayout:
-            orientation: "horizontal"
+        AnchorLayout:
             size_hint: 1, .1
-            TextInput:
-                size_hint: .6, 1
-                font_size: "20sp"
-            Button:
-                text: "Change Password"
-                color: 0, 0, 0, 1
-                size_hint: .4, 1
+            BoxLayout:
+                orientation: "horizontal"
+                size_hint: .9, 1
+                TextInput:
+                    size_hint: .6, 1
+                    font_size: "20sp"
+                Button:
+                    text: "Change Password"
+                    color: 0, 0, 0, 1
+                    size_hint: .4, 1
         Label:
             text: ""
             color: 0, 0, 0, 1
@@ -138,11 +152,13 @@
             size: self.size
     BoxLayout:
         orientation: "vertical"
-        Label:
-            text: "Wallpaper"
-            color: 0, 0, 0, 1
-            font_size: "40sp"
+        AnchorLayout:
             size_hint: .4, .2
+            Label:
+                text: "Wallpaper"
+                color: 0, 0, 0, 1
+                font_size: "40sp"
+                size_hint: 1, 1
         FileChooserListView:
             size_hint: 1, .5
         Label:

@@ -13,6 +13,7 @@ from kivy.clock import Clock
 from kivy.lang import Builder
 from kivy.config import Config
 from kivy.uix.button import Button
+from kivy.uix.label import Label
 from kivy.core.window import Window
 from kivy.uix.screenmanager import Screen, ScreenManager, FadeTransition
 from Renderer import Renderer
@@ -47,7 +48,7 @@ class SubSettingsScreen(Screen):
         self.BACK_SCREEN = "Main"
     
     def entered(self):
-        box = self.children[0]
+        box = self.children[0].children[0]
         #box.add_widget(Renderer())
         for category in SUBSETTINGS_CATEGORIES:
             button = Button(on_press=self.goto_subsetting)
@@ -55,6 +56,7 @@ class SubSettingsScreen(Screen):
             button.size = (480, 40)
             button.text = category
             box.add_widget(button)
+        box.add_widget(Label())
     
     def goto_subsetting(self, instance):
         self.parent.transition = FadeTransition()
@@ -102,6 +104,8 @@ class WifiScreen(Screen):
         self.connected_to.text = self.connected_to.text.split(":")[0] + ": " + helper.wifi.get_current_ssid()
     
     def leaving(self):
+        print("stopping")
+        Clock.unschedule(self.update_connection_display)
         self.keyboard_close()
 
 
@@ -111,9 +115,9 @@ class SecurityScreen(Screen):
         self.keyboard = Window.request_keyboard(
             self.keyboard_close, self)
         
-        self.button = self.children[0].children[2].children[0]
+        self.button = self.children[0].children[2].children[0].children[0]
         self.button.on_press = self.change_password
-        self.input = self.children[0].children[2].children[1]
+        self.input = self.children[0].children[2].children[0].children[1]
         self.warning = self.children[0].children[1]
     
     def keyboard_close(self):
@@ -294,4 +298,4 @@ def get_app():
     return controller
 
 def get_icon():
-    return "settings.png"
+    return "newicon.png"

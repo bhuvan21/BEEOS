@@ -105,6 +105,7 @@ class BooksScreen(Screen):
         epub_filename = self.book_filepaths[self.titles.index(instance.children[0].children[0].text)]
         self.parent.get_screen("Read").book_filename = epub_filename.split("/")[-1].split(".")[0]
         self.parent.get_screen("Read").entered()
+        self.parent.transition = FadeTransition()
         self.parent.current = "Read"
 
 class ReadScreen(Screen):
@@ -165,4 +166,4 @@ def get_app():
     return controller
 
 def get_icon():
-    return "icon.png"
+    return "newicon.png"

@@ -203,4 +203,4 @@ def get_app():
     return controller
 
 def get_icon():
-    return "icon.png"
+    return "newicon.png"

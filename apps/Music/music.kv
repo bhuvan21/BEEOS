@@ -14,12 +14,7 @@
                 color: 0, 0, 0, 1
                 font_size: "40sp"
         AnchorLayout:
-            size_hint: 1, .1
-            Button:
-                text: "Playlists"
-                font_size: "25sp"
-        AnchorLayout:
-            size_hint: 1, .7
+            size_hint: 1, .8
             ScrollView:
                 size_hint: .9, 1
                 GridLayout:
@@ -28,7 +23,6 @@
                     row_default_height: '50dp'
                     row_force_default: True
                     height: self.minimum_height
-        
         BoxLayout:
             orientation: "horizontal"
             size_hint: 1, .1
