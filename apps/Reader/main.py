@@ -86,9 +86,8 @@ class BooksScreen(Screen):
             self.titles.append(text)
             
             lbl = Label(text=text, color=[.5, .5, .5, 1], size_hint=(None, None), pos=(button.pos[0], button.pos[1]))
-            if cover != "":
-                layout.add_widget(img)
-                print("adding")
+            layout.add_widget(img)
+            print("adding")
 
             layout.add_widget(lbl)
             
