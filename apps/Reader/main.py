@@ -72,7 +72,6 @@ class BooksScreen(Screen):
             book = EPUBEE(b)
             
             cover_path = helper.get_app_path() + APP_NAME + "/covers/" + self.book_filename + ".jpeg"
-            cover.save(cover_path)
             self.books.append(book)
 
             img = Image(source=cover_path)
