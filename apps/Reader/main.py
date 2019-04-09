@@ -70,17 +70,15 @@ class BooksScreen(Screen):
 
             self.book_filename = b.split("/")[-1].split(".")[0]
             book = EPUBEE(b)
-            cover = book.get_cover()
             
-            if cover != "":
-                cover_path = helper.get_app_path() + APP_NAME + "/covers/" + self.book_filename + ".jpeg"
-                cover.save(cover_path)
-                self.books.append(book)
+            cover_path = helper.get_app_path() + APP_NAME + "/covers/" + self.book_filename + ".jpeg"
+            cover.save(cover_path)
+            self.books.append(book)
 
-                img = Image(source=cover_path)
-                img.size_hint_x = None
-                img.width = 100
-                img.height = 100
+            img = Image(source=cover_path)
+            img.size_hint_x = None
+            img.width = 100
+            img.height = 100
             
             if len(book.title) > 18:
                 text = book.title[:15] + "..."

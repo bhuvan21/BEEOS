@@ -24,6 +24,7 @@ Config.set('graphics', 'height', '800')
 class ChoicesScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.BACK_SCREEN = "Main"
     
     def entered(self):
         self.grid = self.children[0].children[1].children[0].children[0]

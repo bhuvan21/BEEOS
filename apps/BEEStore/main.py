@@ -60,6 +60,7 @@ class MainScreen(Screen):
 class AllAppsScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.BACK_SCREEN = "AllApps"
     
     def entered(self):
         n = 0
@@ -111,7 +112,7 @@ class AllAppsScreen(Screen):
 class DetailAppScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        
+        self.BACK_SCREEN = "AllApps"
     
     def entered(self):
         root = self.children[0]
