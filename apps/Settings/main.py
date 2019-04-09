@@ -82,7 +82,10 @@ class WifiScreen(Screen):
             button.text = network
             self.scroll.children[0].add_widget(button)
         
-        Clock.schedule_interval(self.update_connection_display, 2)
+        #Clock.schedule_interval(self.update_connection_display, 2)
+        thread = threading.Thread(target=self.update_connection_display)
+        thread.setDaemon(True)
+        thread.start()
 
     def keyboard_close(self):
         self.keyboard = None
@@ -90,7 +93,7 @@ class WifiScreen(Screen):
     def connect_to_ssid(self, instance):
         helper.wifi.mobile_connect(instance.text, self.input.text)
     
-    def update_connection_display(self, dt):
+    def update_connection_display(self):
         ssids = helper.wifi.get_all_ssids()
         current = helper.wifi.get_current_ssid()
         
@@ -102,10 +105,11 @@ class WifiScreen(Screen):
             self.scroll.children[0].add_widget(button)
         
         self.connected_to.text = self.connected_to.text.split(":")[0] + ": " + helper.wifi.get_current_ssid()
+        self.update_connection_display()
     
     def leaving(self):
         print("stopping")
-        Clock.unschedule(self.update_connection_display)
+        #Clock.unschedule(self.update_connection_display)
         self.keyboard_close()
 
 
