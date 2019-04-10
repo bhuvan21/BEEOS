@@ -7,15 +7,14 @@ PIN Unlock
 Existance of Home Screen  
 App system  
 App store  
-
-TODO:  
 Settings app - Bluetooth + Wifi, Change Wallpapers
-Volume, Screen Dimming?, Truetone? etc 
+Volume, Lock + Screen Dimming
 File Transfer System
 Music app
 Reading app  
-Project Gutenberg Ebook Getter
 Weather/Temperature App
+TODO:  
+Project Gutenberg Ebook Getter
 Calculator
 Email
 Tic Tac Toe
