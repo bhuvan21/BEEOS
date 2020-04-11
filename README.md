@@ -4,16 +4,9 @@ This is the GUI system that will run on BEE v2.
 "BEE" is essentially a modern day smartphone I created . . . if modern day meant 2007.
 This is the second iteration of BEE.
 
-Here's the first iteration:
-![alt text](https://i.imgur.com/oTUWWay.jpg "BEE v1.0")
-
-Here's the second iteration:
-![alt text](https://i.imgur.com/mHhpkSA.jpg "BEE v2.0")
-
-
-And here's the CAD design:
-![alt text](https://imgur.com/a/PKS72Zg "BEE v2.0 CAD")
-
+| BEE v1.0 | BEE v2.0 | BEE v2.0 CAD |
+|----------|----------|--------------|
+|![alt text](https://i.imgur.com/oTUWWay.jpg "BEE v1.0")|![alt text](https://i.imgur.com/mHhpkSA.jpg "BEE v2.0")|![alt text](https://i.imgur.com/nFKj3L9.png "BEE v2.0 CAD")|
 
 It has a fully fledged app system, and there is even an app store!
 
