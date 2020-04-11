@@ -5,7 +5,7 @@ This is the GUI system that will run on BEE v2.
 This is the second iteration of BEE.
 
 Here's the first iteration:
-![alt text](https://i.imgur.com/2opERe1.jpg "BEE v1.0")
+![alt text](https://i.imgur.com/oTUWWay.jpg "BEE v1.0")
 
 Here's the second iteration:
 https://imgur.com/a/dep7Wyb
