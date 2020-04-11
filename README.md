@@ -1,6 +1,16 @@
 # BEEOS
-This is the "operating system" that will run on BEE v2. It's not really an operating system, more a nice gui.  
+This is the GUI system that will run on BEE v2.
+
 "BEE" is essentially a modern day smartphone I created . . . if modern day meant 2007.
+This is the second iteration of BEE.
+
+Here's the first iteration:
+![alt text](https://imgur.com/a/H84v04Z "Test")
+
+
+
+
+
 It has a fully fledged app system, and there is even an app store!
 
 
