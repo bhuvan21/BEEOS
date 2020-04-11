@@ -8,11 +8,11 @@ Here's the first iteration:
 ![alt text](https://i.imgur.com/oTUWWay.jpg "BEE v1.0")
 
 Here's the second iteration:
-https://imgur.com/a/dep7Wyb
+![alt text](https://i.imgur.com/mHhpkSA.jpg "BEE v2.0")
+
 
 And here's the CAD design:
-https://imgur.com/a/PKS72Zg
-
+![alt text](https://imgur.com/a/PKS72Zg "BEE v2.0 CAD")
 
 
 It has a fully fledged app system, and there is even an app store!
