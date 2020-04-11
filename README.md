@@ -10,27 +10,26 @@ This is the second iteration of BEE.
 
 It has a fully fledged app system, and there is even an app store!
 
-
 Currently Implemented:  
-Lock Screen  
-PIN Unlock  
-Existance of Home Screen  
-App system  
-App store  
-Settings app - Bluetooth + Wifi, Change Wallpapers
-Volume, Lock + Screen Dimming
-File Transfer System
-Music app
-EPUB Reading app  
-Weather/Temperature App
+- Lock Screen  
+- PIN Unlock  
+- Existance of Home Screen  
+- App system  
+- App store  
+- Settings app - Bluetooth + Wifi, Change Wallpapers
+- Volume, Lock + Screen Dimming
+- File Transfer System
+- Music app
+- EPUB Reading app  
+- Weather/Temperature App
 
-TODO:  
-Project Gutenberg Ebook Getter
-Calculator
-Email
-Tic Tac Toe
-Clock, Timer, Stopwatch
-File Browser?
-Broswer?
-Dice Rolling?
-Reddit?
+Future Ideas:  
+- Project Gutenberg Ebook Getter
+- Calculator
+- Email
+- Tic Tac Toe
+- Clock, Timer, Stopwatch
+- File Browser?
+- Broswer?
+- Dice Rolling?
+- Reddit?
